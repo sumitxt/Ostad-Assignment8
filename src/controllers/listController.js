@@ -86,7 +86,7 @@ exports.status = (req, res) => {
             res.status(401).json({ status: 'failed', data: "Modification failed" })
 
         } else if (data.modifiedCount == 1) {
-            res.status(202).json({ status: 'Congratulations!', data: "Successfully modified" })  //We will get this result for almost everytime because of updateDate
+            res.status(202).json({ status: 'Congratulations!', data: "Successfully modified" })  
         }
         else {
             res.status(200).json({ status: 'Updated', data: data })
@@ -104,7 +104,7 @@ exports.deleter = (req, res) => {
             res.status(401).json({ status: 'Failed', data: "Delete failed" })
 
         } else if (data.deletedCount == 1) {
-            res.status(202).json({ status: 'Congratulations!', data: "Successfully deleted" })  //We will get this result for almost everytime because of updateDate
+            res.status(202).json({ status: 'Congratulations!', data: "Successfully deleted" })  
         } else {
             res.status(200).json({ status: 'Deleted', data: data })
 
