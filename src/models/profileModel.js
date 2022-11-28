@@ -21,8 +21,8 @@ const userSchema = mongoose.Schema({
     },
     City: {
         type: String,
-        enum: ['Dhaka', 'Chattagram', 'Nansana'],
-        default: 'Nansana',
+        enum: ['Dhaka', 'Chattogram', 'Khulna', 'Sylhet', 'Rajshahi', 'Rangpur', 'Mymensingh', 'Barishal','Cumilla', 'Narayanganj', 'Gazipur'],
+        default: 'Chattogram',
         immutable: true
     },
     userName: {
@@ -37,5 +37,5 @@ const userSchema = mongoose.Schema({
     }
 }, {versionKey: false});
 
-const profileModel = mongoose.model('UserProfiles', userSchema);
+const profileModel = mongoose.model('userProfiles', userSchema);
 module.exports = profileModel

@@ -8,9 +8,9 @@ exports.signup=(req,res)=>{
     profileModel.create(reqBody,(error,data)=>{
         //console.log(error)
         if(error){
-            res.status(400).json({status:"failed",data:error.message})
+            res.status(400).json({status:"Failed",data:error.message})
         }else{
-            res.status(201).json({status:"success",data:data})
+            res.status(201).json({status:"Successful",data:data})
         }
 
     })
@@ -21,16 +21,16 @@ exports.login=async (req,res)=>{
     let passWord=req.body['passWord']
 
     if(!userName || !passWord){
-        return res.status(401).json({ status: 'error', Reason: 'Make sure to enter user and password' })
+        return res.status(401).json({ status: 'Error', Reason: 'Make sure to enter user and password' })
     }
 
     const user = await profileModel.findOne({ userName });
     //console.log(user)
     if(user==null){
-        return res.status(403).json({ status: 'error', Reason: 'User not found' })
+        return res.status(403).json({ status: 'Error', Reason: 'User not found' })
     }else if(user.passWord!=passWord){
 
-            return res.status(403).json({ status: 'password error', Reason: 'Password did not match' })
+            return res.status(403).json({ status: 'Password error', Reason: 'Password did not match' })
         } else {
             let payload = {
                 exp: Math.floor(Date.now() / 1000) + (604800), //7days
@@ -51,7 +51,7 @@ exports.profile=(req,res)=>{
         if(error){
         res.status(401).json({status:"Unauthorized",data:error})
         }else{
-            res.status(200).json({status:"success",data:data})
+            res.status(200).json({status:"Success",data:data})
         }
         }
     )
@@ -63,7 +63,7 @@ exports.update=(req,res)=>{
     profileModel.updateOne({userName:userName},{$set:reqBody},(error,data)=>{
         //console.log(data)
         if(error){
-            res.status(404).json({status:'failed',data:error})
+            res.status(404).json({status:'Failed',data:error})
         }else if(data.acknowledged===false){
             res.status(401).json({status:'failed',data:"Only Password modification is allowed"})
 

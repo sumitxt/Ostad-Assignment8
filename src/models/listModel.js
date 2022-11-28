@@ -12,7 +12,7 @@ const listSchema = mongoose.Schema({
     status: {
         type: String,
         enum: ['new', 'incomplete', 'completed'],
-        default: "new"
+        default: 'new'
     },
     creationDate: { type: Date },
     updateDate: { type: Date }

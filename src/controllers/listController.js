@@ -32,7 +32,7 @@ exports.view = (req, res) => {
         if (error) {
             res.status(401).json({ status: "Unauthorized", data: error })
         } else {
-            res.status(200).json({ status: "success", data: data })
+            res.status(200).json({ status: "Success", data: data })
         }
     }
     )
@@ -50,19 +50,19 @@ exports.updater = (req, res) => {
     }
     listModel.updateOne({ _id: id }, { $set: updateBody }, (error, data) => {
         if (error) {
-            res.status(404).json({ status: 'failed', data: error })
+            res.status(404).json({ status: 'Failed', data: error })
         }
         else if (data.acknowledged === false) {
-            res.status(401).json({ status: 'failed', data: "Could not modify" })
+            res.status(401).json({ status: 'Failed', data: "Could not modify" })
 
         } else if (data.modifiedCount == 0) {
-            res.status(401).json({ status: 'failed', data: "Modification failed" })
+            res.status(401).json({ status: 'Failed', data: "Modification failed" })
 
         } else if (data.modifiedCount == 1) {
             res.status(202).json({ status: 'Congratulations!', data: "Successfully modified" })  //We will get this result for almost everytime because of updateDate
         }
         else {
-            res.status(200).json({ status: 'updated', data: data })
+            res.status(200).json({ status: 'Updated', data: data })
 
         }
     })
@@ -77,13 +77,13 @@ exports.status = (req, res) => {
     }
     listModel.updateOne({ _id: id }, { $set: updateStatus }, (error, data) => {
         if (error) {
-            res.status(404).json({ status: 'failed', data: error })
+            res.status(404).json({ status: 'Failed', data: error })
         }
         else if (data.acknowledged === false) {
-            res.status(401).json({ status: 'failed', data: "Could not modify" })
+            res.status(401).json({ status: 'Failed', data: "Could not modify" })
 
         } else if (data.modifiedCount == 0) {
-            res.status(401).json({ status: 'failed', data: "Modification failed" })
+            res.status(401).json({ status: 'Failed', data: "Modification failed" })
 
         } else if (data.modifiedCount == 1) {
             res.status(202).json({ status: 'Congratulations!', data: "Successfully modified" })  

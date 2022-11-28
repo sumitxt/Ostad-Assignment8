@@ -30,7 +30,7 @@ app.use(express.json());
 const limiter=rateLimit({windowsMe:15*60*1000,max:3000})
 app.use(limiter)
 
-//MongoDB connection sting
+//MongoDB connection string
 
 const URI=process.env.URI
 const OPTION={user:process.env.USER,pass:process.env.PASS}
@@ -48,7 +48,7 @@ app.use("/api/v1",router)
 
 //Undefined Routing Implementation
 app.use("*",(req,res)=>{
-    res.status(404).json({status:"fail",data:"Not Found"})
+    res.status(404).json({status:"Failed",data:"Not Found"})
 })
 
 
