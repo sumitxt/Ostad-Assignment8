@@ -1,5 +1,5 @@
 # Ostad-Assignment8
-#To Do List
+# To Do List
 Features
 ## Login and registration
 ## Profile updates
