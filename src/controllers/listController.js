@@ -40,6 +40,7 @@ exports.view = (req, res) => {
 
 
 exports.updater = (req, res) => {
+    let userName = req.headers['userName']
     let { subject, description, status, id } = req.body
     let updateDate = Date.now()
     updateBody = {
@@ -48,7 +49,7 @@ exports.updater = (req, res) => {
         status: status,
         updateDate: updateDate
     }
-    listModel.updateOne({ _id: id }, { $set: updateBody }, (error, data) => {
+    listModel.updateOne({$and:[{_id:id},{userName:userName}]}, { $set: updateBody }, (error, data) => {
         if (error) {
             res.status(404).json({ status: 'Failed', data: error })
         }
@@ -69,13 +70,14 @@ exports.updater = (req, res) => {
 }
 
 exports.status = (req, res) => {
+    let userName = req.headers['userName']
     let { status, id } = req.body
     let updateDate = Date.now()
     updateStatus = {
         status: status,
         updateDate: updateDate
     }
-    listModel.updateOne({ _id: id }, { $set: updateStatus }, (error, data) => {
+    listModel.updateOne({$and:[{_id:id},{userName:userName}]}, { $set: updateStatus }, (error, data) => {
         if (error) {
             res.status(404).json({ status: 'Failed', data: error })
         }
@@ -83,10 +85,10 @@ exports.status = (req, res) => {
             res.status(401).json({ status: 'Failed', data: "Could not modify" })
 
         } else if (data.modifiedCount == 0) {
-            res.status(401).json({ status: 'Failed', data: "Modification failed" })
+            res.status(401).json({ status: 'Failed', data: "Modification failed or Wrong User" })
 
         } else if (data.modifiedCount == 1) {
-            res.status(202).json({ status: 'Congratulations!', data: "Successfully modified" })  
+            res.status(202).json({ status: 'Congratulations!', data: "Successfully modified" })
         }
         else {
             res.status(200).json({ status: 'Updated', data: data })
@@ -96,12 +98,13 @@ exports.status = (req, res) => {
 }
 
 exports.deleter = (req, res) => {
+    let userName = req.headers['userName']
     let id = req.body['id']
-    listModel.remove({ _id: id }, (error, data) => {
+    listModel.deleteOne({$and:[{_id:id},{userName:userName}]}, (error, data) => {
         if (error) {
             res.status(404).json({ status: 'Failed', data: error })
         } else if (data.deletedCount == 0) {
-            res.status(401).json({ status: 'Failed', data: "Delete failed" })
+            res.status(401).json({ status: 'Failed', data: "Already deleted or Doesn't exist or Wrong User" })
 
         } else if (data.deletedCount == 1) {
             res.status(202).json({ status: 'Congratulations!', data: "Successfully deleted" })  
@@ -121,11 +124,12 @@ exports.statusFilter = (req, res) => {
     const todo = listModel.find({ userName: userName, status: status }, (error, data) => {
         if (error) {
             res.status(400).json({ status: 'Failed', data: error })
-        } else {
+        } 
+        else {
             res.status(200).json({ status: 'Filtered', data: data })
         }
     })
-    //console.log(todo)
+
 }
 
 exports.dateFilter = (req, res) => {
