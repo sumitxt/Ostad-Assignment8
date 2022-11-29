@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
     },
     City: {
         type: String,
-        enum: ['Dhaka', 'Chattogram', 'Khulna', 'Sylhet', 'Rajshahi', 'Rangpur', 'Mymensingh', 'Barishal','Cumilla', 'Narayanganj', 'Gazipur'],
+        enum: ['Dhaka', 'Chattogram', 'Khulna', 'Sylhet', 'Rajshahi', 'Rangpur', 'Mymensingh', 'Barishal', 'Cumilla', 'Narayanganj', 'Gazipur'],
         default: 'Chattogram',
         immutable: true
     },
@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Password is required"]
     }
-}, {versionKey: false});
+}, { versionKey: false });
 
 const profileModel = mongoose.model('userProfiles', userSchema);
 module.exports = profileModel

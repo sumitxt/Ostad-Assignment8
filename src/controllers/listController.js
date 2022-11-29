@@ -49,7 +49,7 @@ exports.updater = (req, res) => {
         status: status,
         updateDate: updateDate
     }
-    listModel.updateOne({$and:[{_id:id},{userName:userName}]}, { $set: updateBody }, (error, data) => {
+    listModel.updateOne({ $and: [{ _id: id }, { userName: userName }] }, { $set: updateBody }, (error, data) => {
         if (error) {
             res.status(404).json({ status: 'Failed', data: error })
         }
@@ -77,7 +77,7 @@ exports.status = (req, res) => {
         status: status,
         updateDate: updateDate
     }
-    listModel.updateOne({$and:[{_id:id},{userName:userName}]}, { $set: updateStatus }, (error, data) => {
+    listModel.updateOne({ $and: [{ _id: id }, { userName: userName }] }, { $set: updateStatus }, (error, data) => {
         if (error) {
             res.status(404).json({ status: 'Failed', data: error })
         }
@@ -100,14 +100,14 @@ exports.status = (req, res) => {
 exports.deleter = (req, res) => {
     let userName = req.headers['userName']
     let id = req.body['id']
-    listModel.deleteOne({$and:[{_id:id},{userName:userName}]}, (error, data) => {
+    listModel.deleteOne({ $and: [{ _id: id }, { userName: userName }] }, (error, data) => {
         if (error) {
             res.status(404).json({ status: 'Failed', data: error })
         } else if (data.deletedCount == 0) {
             res.status(401).json({ status: 'Failed', data: "Already deleted or Doesn't exist or Wrong User" })
 
         } else if (data.deletedCount == 1) {
-            res.status(202).json({ status: 'Congratulations!', data: "Successfully deleted" })  
+            res.status(202).json({ status: 'Congratulations!', data: "Successfully deleted" })
         } else {
             res.status(200).json({ status: 'Deleted', data: data })
 
@@ -124,7 +124,7 @@ exports.statusFilter = (req, res) => {
     const todo = listModel.find({ userName: userName, status: status }, (error, data) => {
         if (error) {
             res.status(400).json({ status: 'Failed', data: error })
-        } 
+        }
         else {
             res.status(200).json({ status: 'Filtered', data: data })
         }
